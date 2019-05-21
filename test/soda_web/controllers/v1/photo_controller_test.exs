@@ -27,6 +27,13 @@ defmodule SodaWeb.V1.PhotoControllerTest do
     test "lists all photos", %{conn: conn} do
       conn = get(conn, Routes.api_v1_photo_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
+
+      {:ok, photo} = Admin.create_photo(@create_attrs)
+      conn = get(conn, Routes.api_v1_photo_path(conn, :index))
+      obj = List.first(json_response(conn, 200)["data"])
+
+      assert obj["title"] == photo.title
+      assert obj["description"] == photo.description
     end
   end
 
