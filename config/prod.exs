@@ -16,7 +16,7 @@ config :soda, SodaWeb.Endpoint,
   secret_key_base: {:system, "SECRET_KEY_BASE"}
 
 config :soda, Soda.Repo,
-  url: {:system, "DATABASE_URL"},
+  url: System.get_env("DATABASE_URL"),
   pool_size: 10
 
 # Do not print debug messages in production
