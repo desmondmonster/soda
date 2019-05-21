@@ -40,4 +40,11 @@ defmodule SodaWeb.V1.PhotoController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def search(conn, %{"q" => q}) do
+    photos = Admin.search_photos(q)
+
+    render(conn, "index.json", photos: photos)
+  end
+
 end

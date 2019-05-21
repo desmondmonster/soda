@@ -21,6 +21,7 @@ defmodule SodaWeb.Router do
     pipe_through :api
 
     scope "/v1", as: :api_v1, alias: V1 do
+      get "/photos/search", PhotoController, :search
       resources "/photos", PhotoController, except: [:new, :edit]
     end
   end

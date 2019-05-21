@@ -92,8 +92,41 @@ defmodule SodaWeb.V1.PhotoControllerTest do
     end
   end
 
-  defp create_photo(_) do
+  describe "search photos" do
+    setup [:create_photo, :create_other_photo]
+
+    test "finds photos with matching title", %{conn: conn} do
+      query = "itle"
+
+      conn = get(conn, Routes.api_v1_photo_path(conn, :search, %{q: query}))
+
+      assert [%{
+               "id" => id,
+               "description" => "some description",
+               "title" => "some title"
+             }] = json_response(conn, 200)["data"]
+    end
+
+    test "finds photos with matching description", %{conn: conn} do
+      query = "scripti"
+
+      conn = get(conn, Routes.api_v1_photo_path(conn, :search, %{q: query}))
+
+      assert [%{
+               "id" => id,
+               "description" => "some description",
+               "title" => "some title"
+             }] = json_response(conn, 200)["data"]
+    end
+  end
+
+  defp create_photo(_ctx) do
     photo = fixture(:photo)
     {:ok, photo: photo}
+  end
+
+  defp create_other_photo(_ctx) do
+    photo = Admin.create_photo(%{title: "something", description: "different"})
+    {:ok, other_photo: photo}
   end
 end

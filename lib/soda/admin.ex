@@ -101,4 +101,26 @@ defmodule Soda.Admin do
   def change_photo(%Photo{} = photo) do
     Photo.changeset(photo, %{})
   end
+
+  @doc """
+  Returns photos whose title or description contains the query string.
+  Case-insensitive, and is invulnerable to SQL injection.
+
+  Can be expensive, since prefixing search query with '%' means we cannot use
+  indexes on the field, but allows us to find the string anywhere in the text.
+  Should be performant up to ~1000 records.
+
+  ## Examples
+      iex> search_photos("cats")
+      [%Photo{}, ...]
+
+  """
+  def search_photos(q) when is_nil(q) or nil == "", do: []
+  def search_photos(q) do
+    from(p in Photo,
+      where: ilike(p.title, ^"%#{q}%"),
+      or_where: ilike(p.description, ^"%#{q}%")
+    )
+    |> Repo.all()
+  end
 end
