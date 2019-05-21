@@ -17,8 +17,11 @@ defmodule SodaWeb.Router do
     pipe_through :browser
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", SodaWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", SodaWeb do
+    pipe_through :api
+
+    scope "/v1", as: :api_v1, alias: V1 do
+      resources "/photos", PhotoController, except: [:new, :edit]
+    end
+  end
 end
