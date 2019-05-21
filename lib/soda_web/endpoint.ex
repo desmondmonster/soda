@@ -1,6 +1,8 @@
 defmodule SodaWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :soda
 
+  plug Plug.Ping, paths: ["/"]
+
   socket "/socket", SodaWeb.UserSocket,
     websocket: true,
     longpoll: false
