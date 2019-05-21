@@ -17,6 +17,7 @@ defmodule Soda.Image do
   @spec upload(String.t) :: s3_url :: String.t
   def upload(image_base64) do
     image_bucket = "crevalle-soda"
+    opts = [{:acl, :public_read}]
 
     # Decode the image
     {:ok, image_binary} = Base.decode64(image_base64)
@@ -29,7 +30,7 @@ defmodule Soda.Image do
 
     # Upload to S3
     {:ok, _response} =
-      S3.put_object(image_bucket, filename, image_binary)
+      S3.put_object(image_bucket, filename, image_binary, opts)
       |> ExAws.request()
 
     # Generate the full URL to the newly uploaded image
