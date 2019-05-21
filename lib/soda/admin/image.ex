@@ -28,7 +28,7 @@ defmodule Soda.Image do
       |> unique_filename()
 
     # Upload to S3
-    {:ok, response} =
+    {:ok, _response} =
       S3.put_object(image_bucket, filename, image_binary)
       |> ExAws.request()
 
