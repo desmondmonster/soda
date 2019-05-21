@@ -16,7 +16,7 @@ defmodule Soda.Image do
   """
   @spec upload(String.t) :: s3_url :: String.t
   def upload(image_base64) do
-    image_bucket = "image_bucket"
+    image_bucket = "crevalle-soda"
 
     # Decode the image
     {:ok, image_binary} = Base.decode64(image_base64)
