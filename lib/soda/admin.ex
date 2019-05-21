@@ -50,6 +50,10 @@ defmodule Soda.Admin do
 
   """
   def create_photo(attrs \\ %{}) do
+    url = Soda.Image.upload(attrs["image"])
+
+    attrs = Map.put(attrs, "url", url)
+
     %Photo{}
     |> Photo.changeset(attrs)
     |> Repo.insert()

@@ -5,6 +5,7 @@ defmodule Soda.Admin.Photo do
   schema "photos" do
     field :description, :string
     field :title, :string
+    field :url, :string
 
     timestamps()
   end
@@ -12,7 +13,7 @@ defmodule Soda.Admin.Photo do
   @doc false
   def changeset(photo, attrs) do
     photo
-    |> cast(attrs, [:title, :description])
+    |> cast(attrs, [:title, :description, :url])
     |> validate_required([:title, :description])
   end
 end

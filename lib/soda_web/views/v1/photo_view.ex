@@ -13,6 +13,7 @@ defmodule SodaWeb.V1.PhotoView do
   def render("photo.json", %{photo: photo}) do
     %{id: photo.id,
       title: photo.title,
-      description: photo.description}
+      description: photo.description,
+      url: photo.url}
   end
 end
